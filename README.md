@@ -199,6 +199,15 @@ Screenshots of the application:
 
 <img src="screenshots\sort_price.jpeg" width="300">
 
+## Dark Mode & Light Mode
+
+## Dark Mode
+
+<img src="screenshots\dark_mode.jpeg" width="300">
+
+## Light Mode
+
+<img src="screenshots\light_mode.jpeg" width="300">
 
 ------------------
 

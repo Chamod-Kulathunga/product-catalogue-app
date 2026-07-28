@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/product_provider.dart';
+import '../../providers/theme_provider.dart';
 import '../../widgets/product_card.dart';
+import '../../widgets/empty_state.dart';
 import '../favorites/favorites_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (!mounted) return;
 
       context.read<ProductProvider>().fetchProducts();
+
       _scrollController.addListener(() {
         if (_scrollController.position.pixels >=
             _scrollController.position.maxScrollExtent - 200) {
@@ -36,19 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       });
     });
-
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >=
-          _scrollController.position.maxScrollExtent - 200) {
-        context.read<ProductProvider>().loadMoreProducts();
-      }
-    });
   }
 
   @override
   void dispose() {
     _searchController.dispose();
     _scrollController.dispose();
+
     super.dispose();
   }
 
@@ -57,7 +54,21 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Catalogue'),
+
         actions: [
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) {
+              return IconButton(
+                onPressed: () {
+                  themeProvider.toggleTheme();
+                },
+                icon: Icon(
+                  themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                ),
+              );
+            },
+          ),
+
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -69,17 +80,22 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
+
             child: Column(
               children: [
                 TextField(
                   controller: _searchController,
+
                   decoration: InputDecoration(
                     hintText: 'Search products...',
+
                     prefixIcon: const Icon(Icons.search),
+
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
                             onPressed: () {
@@ -94,27 +110,35 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: const Icon(Icons.clear),
                           )
                         : null,
+
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
+
                   onChanged: (value) {
                     context.read<ProductProvider>().searchProducts(value);
+
                     setState(() {});
                   },
                 ),
+
                 const SizedBox(height: 12),
+
                 Row(
                   children: [
                     Expanded(
                       child: DropdownButtonFormField<bool>(
                         initialValue: _ascending,
+
                         decoration: InputDecoration(
                           labelText: 'Sort Price',
+
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
+
                         items: const [
                           DropdownMenuItem(
                             value: true,
@@ -125,6 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text('High → Low'),
                           ),
                         ],
+
                         onChanged: (value) {
                           if (value != null) {
                             setState(() {
@@ -136,7 +161,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
+
                     const SizedBox(width: 12),
+
                     Expanded(
                       child: Consumer<ProductProvider>(
                         builder: (context, provider, child) {
@@ -144,12 +171,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             initialValue: _selectedCategory.isEmpty
                                 ? null
                                 : _selectedCategory,
+
                             hint: const Text('Category'),
+
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
+
                             items: provider.categories.map((category) {
                               return DropdownMenuItem(
                                 value: category,
@@ -159,6 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               );
                             }).toList(),
+
                             onChanged: (category) {
                               if (category != null) {
                                 setState(() {
@@ -179,6 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+
           Expanded(
             child: Consumer<ProductProvider>(
               builder: (context, provider, child) {
@@ -190,6 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+
                       children: [
                         const Icon(Icons.error_outline, size: 70),
 
@@ -203,23 +236,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
 
-                        const SizedBox(height: 8),
-
-                        Text(
-                          provider.errorMessage!,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.grey.shade600),
-                        ),
-
                         const SizedBox(height: 20),
 
                         ElevatedButton.icon(
                           onPressed: () {
                             context.read<ProductProvider>().fetchProducts();
                           },
-
                           icon: const Icon(Icons.refresh),
-
                           label: const Text('Retry'),
                         ),
                       ],
@@ -228,32 +251,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
 
                 if (provider.products.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.search_off, size: 70),
-
-                        const SizedBox(height: 16),
-
-                        const Text(
-                          'No products found',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-
-                        const SizedBox(height: 8),
-
-                        Text(
-                          'Try searching with another keyword',
-                          style: TextStyle(color: Colors.grey.shade600),
-                        ),
-                      ],
-                    ),
+                  return const EmptyState(
+                    icon: Icons.search_off,
+                    title: 'No Products Found',
+                    message: 'Try searching with another keyword.',
                   );
                 }
+
                 return RefreshIndicator(
                   onRefresh: () async {
                     await context.read<ProductProvider>().fetchProducts();

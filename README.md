@@ -165,19 +165,40 @@ Screenshots of the application:
 
 ## Product List Screen
 
-<img src="screenshots/product_list.png" width="300">
+<img src="screenshots\product_list.jpeg" width="300">
 
 ## Product Details Screen
 
-<img src="screenshots/product_details.png" width="300">
+<img src="screenshots\product_details.jpeg" width="300">
 
 ## Favourite Screen
 
-<img src="screenshots/favourites.png" width="300">
+<img src="screenshots\favourites.jpeg" width="300">
 
-## Dark Theme
+## Categories
 
-<img src="screenshots/dark_theme.png" width="300">
+<img src="screenshots\categories.jpeg" width="300">
+
+## No Favourite
+
+<img src="screenshots\no_favourites.jpeg" width="300">
+
+## No Product
+
+<img src="screenshots\no_products.jpeg" width="300">
+
+## Retry
+
+<img src="screenshots\retry.jpeg" width="300">
+
+## Search
+
+<img src="screenshots\search.jpeg" width="300">
+
+## Sort Price
+
+<img src="screenshots\sort_price.jpeg" width="300">
+
 
 ------------------
 

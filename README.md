@@ -2,15 +2,15 @@
 
 A Flutter-based Product Catalogue application developed as part of an Associate Flutter Developer Practical Assessment.
 
-The application demonstrates Flutter fundamentals, UI/UX implementation, state management, API integration, navigation, and clean project organisation.
+This project demonstrates Flutter fundamentals, responsive UI development, state management, API integration, navigation, local data persistence, and clean project organisation.
 
 ------------------
 
 # Project Overview
 
-Product Catalogue App allows users to browse products, search products, view product details, and manage favourite products.
+Product Catalogue App allows users to browse products, search products, view product details, manage favourite products, and switch between light and dark themes.
 
-The application provides a smooth user experience with responsive UI, proper loading states, error handling, empty states, and theme support.
+The application focuses on a clean user experience with proper loading states, error handling, empty states, and maintainable Flutter architecture.
 
 ------------------
 
@@ -19,16 +19,15 @@ The application provides a smooth user experience with responsive UI, proper loa
 ## Product List Screen
 
 - Display products in a catalogue view
-- Show product image
+- Show product images
 - Display product name
 - Display product price
 - Display product category
-- Add/remove favourite products
-
+- Add and remove favourite products
 
 ## Product Details Screen
 
-- View detailed product information
+- View complete product information
 - Large product image
 - Product name
 - Product price
@@ -36,14 +35,12 @@ The application provides a smooth user experience with responsive UI, proper loa
 - Full product description
 - Favourite button
 
-
 ## Search
 
 - Search products by name
 - Supports substring matching
-- Updates product list while typing
-- Displays empty state when no results are found
-
+- Updates results while typing
+- Displays empty state when no products match
 
 ## Favourites
 
@@ -52,23 +49,21 @@ The application provides a smooth user experience with responsive UI, proper loa
 - Favourite status updates across screens
 - Favourite data persists after application restart
 
+## Theme Support
 
-## Theme
-
-- Light theme support
-- Dark theme support
-- User can switch between themes
-
+- Light theme
+- Dark theme
+- User can switch application themes
+- Theme changes apply throughout the application
 
 ## Loading & Error Handling
 
-- Loading indicator while fetching data
+- Loading indicator while fetching products
 - Error message display
-- Retry option when loading fails
-- Empty state handling for unavailable products
+- Retry option when API loading fails
+- Empty state handling for unavailable products or search results
 
-
-----------------
+--------------------
 
 # Tech Stack
 
@@ -83,8 +78,8 @@ The application provides a smooth user experience with responsive UI, proper loa
 
 ## API & Networking
 
-- Dio
 - REST API
+- Dio
 
 ## Local Storage
 
@@ -96,19 +91,17 @@ The application provides a smooth user experience with responsive UI, proper loa
 - Android Studio
 - Git & GitHub
 
-
---------------------
+----------------------
 
 # Architecture
 
 The application follows a clean and maintainable architecture.
 
-
 lib
 │
 ├── core
-│ ├── constants
-│ └── theme
+│   ├── constants
+│   └── theme
 │
 ├── models
 │
@@ -124,110 +117,67 @@ lib
 │
 └── storage
 
+## Architecture Layers
 
-### Architecture Layers
+### Models
+Responsible for application data structures.
 
-**Models**
-- Handle application data structures
+### Services
+Handles API communication and external data sources.
 
-**Services**
-- Handle API communication
+### Repositories
+Manages data operations between services and state management.
 
-**Repositories**
-- Manage data operations between services and providers
+### Providers
+Handles application state and business logic.
 
-**Providers**
-- Handle application state management
+### Screens & Widgets
+Responsible for user interface implementation.
 
-**Screens & Widgets**
-- Handle UI implementation
+---------------------
 
-
--------------------
-
-# API
+# API Integration
 
 Product data is loaded using REST API integration.
 
-API handling is separated using:
+The API handling is separated using:
 
 - API Service layer
 - Repository layer
 - Provider state management
 
-
-This keeps business logic separated from UI components and improves maintainability.
+This approach keeps business logic separated from UI components and improves scalability and maintainability.
 
 ---------------------
 
-# Screenshots
+# Packages Used
 
-Screenshots of the application will be added below.
+- provider - State management
+- dio - API communication
+- shared_preferences - Local data persistence
+- flutter_launcher_icons - Application icon generation
 
-Included screens:
+----------------------
 
-- Product List Screen
-- Product Details Screen
-- Favourite Screen
-- Dark Theme View
+# Application Screenshots
 
+Screenshots of the application:
 
--------------------
+## Product List Screen
 
-# Setup Instructions
+<img src="screenshots/product_list.png" width="300">
 
-## Prerequisites
+## Product Details Screen
 
-Install:
+<img src="screenshots/product_details.png" width="300">
 
-- Flutter SDK
-- Android Studio / VS Code
-- Android Emulator or Physical Device
+## Favourite Screen
 
+<img src="screenshots/favourites.png" width="300">
 
-## Installation
+## Dark Theme
 
-Clone the repository:
-
-
-git clone https://github.com/Chamod-Kulathunga/product-catalogue-app.git
-
-
-Navigate to project folder:
-
-
-cd product_catalogue_app
-
-
-Install dependencies:
-
-
-flutter pub get
-
-
-Run application:
-
-
-flutter run
-
-
-
-----------------
-
-# APK Build
-
-Generate release APK:
-
-
-flutter build apk --release
-
-
-APK location:
-
-
-build/app/outputs/flutter-apk/app-release.apk
-
-
+<img src="screenshots/dark_theme.png" width="300">
 
 ------------------
 
@@ -241,15 +191,119 @@ The demo video demonstrates:
 - Favourite management
 - Theme switching
 
+-------------------
+
+# Setup Instructions
+
+## Prerequisites
+
+Install the following:
+
+- Flutter SDK
+- Android Studio or Visual Studio Code
+- Android Emulator or Physical Device
+
+## Installation
+
+Clone the repository:
+
+git clone https://github.com/Chamod-Kulathunga/product-catalogue-app.git
+
+Navigate to the project folder:
+
+cd product_catalogue_app
+
+Install dependencies:
+
+flutter pub get
+
+Run the application:
+
+flutter run
 
 -------------------
 
+# Build APK
+
+Generate release APK:
+
+flutter build apk --release
+
+APK location:
+
+build/app/outputs/flutter-apk/app-release.apk
+
+--------------------
+
+# Git Workflow
+
+The project was developed using incremental commits to maintain a clear and understandable development history.
+
+Commits:
+
+Initial Flutter project setup
+        ↓
+Product catalogue UI implementation
+        ↓
+API integration
+        ↓
+Provider state management
+        ↓
+Search & filtering features
+        ↓
+Favourite functionality
+        ↓
+Theme support
+        ↓
+App icon & branding update
+        ↓
+README documentation update
+
+---------------------
+
+# Assumptions
+
+The following assumptions were made during the development of this application:
+
+- Product data is provided through a REST API and no custom backend was required.
+- The application focuses on demonstrating Flutter development skills rather than implementing complex backend functionality.
+- Product information structure follows the available API response format.
+- Internet connectivity is required to load the latest product data.
+
+----------------------
+
+# Challenges
+
+During development, several challenges were handled:
+
+- Managing application state across multiple screens using Provider.
+- Maintaining favourite status between product list and details screens.
+- Implementing proper loading, error, and empty states for better user experience.
+- Organising the project using a clean architecture approach for maintainability.
+- Configuring application launcher icons for Android and iOS platforms.
+- Running Android Studio and Visual Studio Code simultaneously occasionally caused emulator performance issues. This was managed by optimising the development environment and testing the application in smaller iterations.
+
+----------------------
+
+# Future Improvements
+
+Possible future enhancements:
+
+* Advanced product filtering
+* Offline product caching
+* Unit and widget testing
+* User authentication
+* Improved product recommendations
+
+----------------------
+
 # Author
 
-Chamod Kulathunga
+**Chamod Kulathunga**
 
 Flutter Developer
 
 GitHub:
-https://github.com/Chamod-Kulathunga
+
+[https://github.com/Chamod-Kulathunga]
 

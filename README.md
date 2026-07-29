@@ -225,6 +225,8 @@ The demo video demonstrates:
 - Favourite management
 - Theme switching
 
+[Watch Demo Video](demo_video\product_catalogue_app_demo_video.mp4)
+
 -------------------
 
 # Setup Instructions

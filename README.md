@@ -209,6 +209,10 @@ Screenshots of the application:
 
 <img src="screenshots\light_mode.jpeg" width="300">
 
+## App Logo
+
+<img src="screenshots\app_logo.png" width="300">
+
 ------------------
 
 # Demo Video
